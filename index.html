@@ -1302,6 +1302,19 @@
     wrap.scrollTop = wrap.scrollHeight;
   }
 
+  // ── OWNER KEYWORDS ──
+  const OWNER_REGEX = /\b(who\s*(made|built|created|developed|owns|owns?|programmed|coded|designed|trained|set\s*up|made)\s*(you|this|zedcore|u)|your\s*(owner|creator|developer|maker|author|dad|master|boss|programmer|coder|builder)|who\s*are?\s*you(r\s*owner)?|made\s*by|created\s*by|built\s*by|developed\s*by|coded\s*by|designed\s*by|tujhe\s*kisne\s*(banaya|create|develop|code|build|design)|(kisne|kiska)\s*(banaya|banayi|create|develop|design|code|build)|tera\s*(owner|malik|creator|developer|maker|baap)|kaun\s*(hai\s*)?(tera|tumhara|aapka)\s*(owner|malik|creator|developer)|tumhe\s*kisne|aapko\s*kisne)\b/i;
+
+  const OWNER_REPLY = `I was created by **Zade** — a developer and maker behind ZedCore and various other projects under **Zade Systems**.
+
+You can reach Zade here:
+- <a href="https://instagram.com/suspend.z" target="_blank" style="color:#a8d5b5;text-decoration:none"><i class="fa-brands fa-instagram" style="margin-right:4px"></i>@suspend.z</a> on Instagram
+- <a href="https://t.me/zade4everbot" target="_blank" style="color:#a8d5b5;text-decoration:none"><i class="fa-brands fa-telegram" style="margin-right:4px"></i>@zade4everbot</a> on Telegram`;
+
+  function isOwnerQuery(q) {
+    return OWNER_REGEX.test(q.toLowerCase());
+  }
+
   // ── SEND CHAT ──
   async function sendChat() {
     const input = document.getElementById('chat-input');
@@ -1329,6 +1342,32 @@
     input.style.height = 'auto';
 
     const typingId = appendTyping();
+
+    // Owner/creator check — no API call needed
+    if (isOwnerQuery(q)) {
+      await new Promise(r => setTimeout(r, 600)); // small delay feels natural
+      removeTyping(typingId);
+      const wrap = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = 'msg bot';
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble';
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'msg-label';
+      labelDiv.innerHTML = '<i class="fa-solid fa-microchip"></i> ZedCore';
+      const actionsDiv = document.createElement('div');
+      actionsDiv.className = 'msg-actions';
+      div.appendChild(labelDiv);
+      div.appendChild(bubble);
+      div.appendChild(actionsDiv);
+      wrap.appendChild(div);
+      await streamText(bubble, OWNER_REPLY);
+      actionsDiv.innerHTML = `<button class="msg-action-btn" onclick="copyMsgText(this)"><i class="fa-regular fa-copy"></i> copy</button>`;
+      actionsDiv.querySelector('.msg-action-btn')._copyText = 'Created by Zade | Instagram: https://instagram.com/suspend.z | Telegram: https://t.me/zade4everbot';
+      currentConvo.messages.push({ role: 'bot', text: OWNER_REPLY });
+      saveConvo();
+      return;
+    }
 
     try {
       const res = await fetch(`/api/proxy?type=chat&q=${encodeURIComponent(q)}`);
