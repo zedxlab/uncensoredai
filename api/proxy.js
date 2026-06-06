@@ -34,21 +34,41 @@ module.exports = async (req, res) => {
     }
     // nsfw endpoints don't need a query param
 
+    const isImage = type !== "chat";
+
     const upstream = await fetch(targetUrl, {
       headers: {
         "User-Agent": "Mozilla/5.0 (compatible; ZedCore/1.0)",
-        Accept: "application/json, text/plain, */*",
+        Accept: isImage ? "image/*,*/*;q=0.9" : "application/json, text/plain, */*",
       },
     });
 
     const contentType = upstream.headers.get("content-type") || "";
 
-    // If upstream returned an image directly
-    if (contentType.includes("image/")) {
+    // If upstream returned image bytes directly (or it's an image type request)
+    if (contentType.includes("image/") || (isImage && !contentType.includes("json") && !contentType.includes("text"))) {
       const buffer = await upstream.arrayBuffer();
-      res.setHeader("Content-Type", contentType);
+      res.setHeader("Content-Type", contentType || "image/jpeg");
       res.setHeader("Cache-Control", "no-store");
       return res.status(200).send(Buffer.from(buffer));
+    }
+
+    // For image types that returned a redirect or URL in JSON — follow it
+    if (isImage) {
+      const text = await upstream.text();
+      let data;
+      try { data = JSON.parse(text); } catch { data = { result: text }; }
+      const imgUrl = data.image || data.imageUrl || data.url || data.link || data.result || data.data?.url;
+      if (imgUrl) {
+        // Fetch and pipe the actual image
+        const imgRes = await fetch(imgUrl, { headers: { "User-Agent": "Mozilla/5.0" } });
+        const imgBuf = await imgRes.arrayBuffer();
+        const imgCT = imgRes.headers.get("content-type") || "image/jpeg";
+        res.setHeader("Content-Type", imgCT);
+        res.setHeader("Cache-Control", "no-store");
+        return res.status(200).send(Buffer.from(imgBuf));
+      }
+      return res.status(502).json({ error: "No image returned from upstream" });
     }
 
     // Try JSON
