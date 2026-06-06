@@ -669,6 +669,216 @@
     line-height: 1.6;
     max-width: 260px;
   }
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    margin: 8px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(40,98,58,0.4);
+    background: #0a1a20;
+    font-size: 13px;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 12px;
+    background: rgba(40,98,58,0.2);
+    border-bottom: 1px solid rgba(40,98,58,0.25);
+  }
+
+  .code-lang {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .code-copy-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-dim);
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    padding: 3px 9px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+  }
+
+  .code-copy-btn:active, .code-copy-btn.copied {
+    background: rgba(40,98,58,0.3);
+    border-color: var(--border-bright);
+    color: var(--text);
+  }
+
+  .code-block pre {
+    margin: 0;
+    padding: 14px;
+    overflow-x: auto;
+    line-height: 1.6;
+    scrollbar-width: thin;
+    scrollbar-color: var(--green-dim) transparent;
+  }
+
+  .code-block code {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: #a8d5b5;
+  }
+
+  /* syntax colors */
+  .tok-kw  { color: #79c0ff; }  /* keywords */
+  .tok-str { color: #a5d6ff; }  /* strings */
+  .tok-cmt { color: #4a7558; font-style: italic; }  /* comments */
+  .tok-fn  { color: #d2a8ff; }  /* functions */
+  .tok-num { color: #f2cc60; }  /* numbers */
+  .tok-op  { color: #ff9e64; }  /* operators */
+
+  /* ── MSG COPY BUTTON ── */
+  .msg-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+    padding: 0 2px;
+  }
+
+  .msg-action-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 0;
+    transition: color 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .msg-action-btn:hover { color: var(--text-dim); }
+
+  /* ── HISTORY SIDEBAR ── */
+  #history-sidebar {
+    position: fixed;
+    top: 0; right: -100%;
+    width: 85%;
+    max-width: 340px;
+    height: 100%;
+    background: rgba(10,24,30,0.98);
+    border-left: 1px solid var(--border);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease;
+    backdrop-filter: blur(16px);
+  }
+
+  #history-sidebar.open { right: 0; }
+
+  .history-header {
+    padding: 20px 18px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .history-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .history-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  #history-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--green-dim) transparent;
+  }
+
+  .history-item {
+    padding: 12px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .history-item:active { background: var(--surface2); }
+
+  .history-item-text {
+    font-size: 13px;
+    color: var(--text);
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .history-item-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: 'Space Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .history-del {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 2px 4px;
+    flex-shrink: 0;
+  }
+
+  .history-empty {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 40px 20px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 199;
+    display: none;
+  }
+
+  .sidebar-overlay.open { display: block; }
+
 </style>
 </head>
 <body>
@@ -685,9 +895,16 @@
         <span class="logo-sub">Uncensored AI</span>
       </div>
     </div>
-    <div class="status-badge">
+    <div class="status-badge" style="gap:10px">
       <span class="status-dot"></span>
       Online
+      <span style="width:1px;height:14px;background:var(--border);display:inline-block"></span>
+      <button onclick="newChat()" style="background:none;border:none;color:var(--text-dim);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;gap:5px;font-family:'Space Mono',monospace" title="New Chat">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <button onclick="toggleHistory()" style="background:none;border:none;color:var(--text-dim);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;gap:5px;font-family:'Space Mono',monospace" title="History">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </button>
     </div>
   </header>
 
@@ -800,7 +1017,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <span class="footer-brand">ZADE SYSTEMS © 2025</span>
+    <span class="footer-brand">ZADE SYSTEMS © 2026</span>
     <div class="social-links">
       <a class="social-link" href="https://instagram.com/suspend.z" target="_blank" title="@suspend.z">
         <img src="https://img.icons8.com/fluency/48/instagram-new.png" alt="Instagram">
@@ -811,6 +1028,18 @@
     </div>
   </footer>
 
+</div>
+
+<!-- HISTORY SIDEBAR -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleHistory()"></div>
+<div id="history-sidebar">
+  <div class="history-header">
+    <span class="history-title"><i class="fa-solid fa-clock-rotate-left" style="margin-right:8px"></i>Conversations</span>
+    <button class="history-close" onclick="toggleHistory()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div id="history-list">
+    <div class="history-empty">No conversations yet</div>
+  </div>
 </div>
 
 <!-- TOAST -->
@@ -830,7 +1059,288 @@
     }
   }
 
-  // Auto resize textarea
+  // ── HISTORY ──
+  let conversations = JSON.parse(localStorage.getItem('zedcore_convos') || '[]');
+  let currentConvo = null; // { id, title, messages: [{role,text}] }
+
+  function saveConvo() {
+    if (!currentConvo || currentConvo.messages.length === 0) return;
+    const idx = conversations.findIndex(c => c.id === currentConvo.id);
+    if (idx >= 0) conversations[idx] = currentConvo;
+    else conversations.unshift(currentConvo);
+    // keep max 30
+    conversations = conversations.slice(0, 30);
+    localStorage.setItem('zedcore_convos', JSON.stringify(conversations));
+    renderHistoryList();
+  }
+
+  function renderHistoryList() {
+    const list = document.getElementById('history-list');
+    if (conversations.length === 0) {
+      list.innerHTML = '<div class="history-empty">No conversations yet</div>';
+      return;
+    }
+    list.innerHTML = conversations.map(c => `
+      <div class="history-item" onclick="loadConvo('${c.id}')">
+        <div style="flex:1;min-width:0">
+          <div class="history-item-text">${escHtml(c.title)}</div>
+          <div class="history-item-time">${c.time}</div>
+        </div>
+        <button class="history-del" onclick="event.stopPropagation();deleteConvo('${c.id}')">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    `).join('');
+  }
+
+  function deleteConvo(id) {
+    conversations = conversations.filter(c => c.id !== id);
+    localStorage.setItem('zedcore_convos', JSON.stringify(conversations));
+    renderHistoryList();
+  }
+
+  function loadConvo(id) {
+    const c = conversations.find(x => x.id === id);
+    if (!c) return;
+    currentConvo = JSON.parse(JSON.stringify(c));
+    toggleHistory();
+    const wrap = document.getElementById('chat-messages');
+    wrap.innerHTML = '';
+    document.querySelector('.welcome-msg') && document.querySelector('.welcome-msg').remove();
+    c.messages.forEach(m => appendMsg(m.role, m.text, false));
+    wrap.scrollTop = wrap.scrollHeight;
+  }
+
+  function newChat() {
+    saveConvo();
+    currentConvo = null;
+    const wrap = document.getElementById('chat-messages');
+    wrap.innerHTML = `
+      <div class="welcome-msg">
+        <div class="welcome-icon"><i class="fa-solid fa-robot"></i></div>
+        <div class="welcome-title">ZedCore AI</div>
+        <div class="welcome-sub">Uncensored, unfiltered. Ask me anything — no limits, no judgment.</div>
+      </div>`;
+  }
+
+  function toggleHistory() {
+    renderHistoryList();
+    document.getElementById('history-sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('open');
+  }
+
+  // ── HELPERS ──
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function timeStr() {
+    const d = new Date();
+    return d.toLocaleString('en-IN', { hour:'2-digit', minute:'2-digit', day:'numeric', month:'short' });
+  }
+
+  // ── CODE HIGHLIGHT ──
+  const KEYWORDS = /\b(import|from|def|return|class|if|else|elif|for|while|in|not|and|or|is|None|True|False|try|except|with|as|pass|break|continue|lambda|yield|async|await|const|let|var|function|=>|new|this|typeof|instanceof|null|undefined|console|print|echo|int|str|list|dict|bool|float)\b/g;
+  const STRINGS  = /(["'`])(?:(?!\1)[^\\]|\\.)*?\1/g;
+  const COMMENTS = /(#.*$|\/\/.*$|\/\*[\s\S]*?\*\/)/gm;
+  const NUMBERS  = /\b(\d+\.?\d*)\b/g;
+  const FUNCS    = /\b([a-zA-Z_]\w*)\s*(?=\()/g;
+
+  function highlight(code, lang) {
+    let s = escHtml(code);
+    // order matters — comments first, then strings, then rest
+    s = s.replace(COMMENTS, m => `<span class="tok-cmt">${m}</span>`);
+    s = s.replace(STRINGS,  m => `<span class="tok-str">${m}</span>`);
+    s = s.replace(KEYWORDS, m => `<span class="tok-kw">${m}</span>`);
+    s = s.replace(FUNCS,    m => `<span class="tok-fn">${m}</span>`);
+    s = s.replace(NUMBERS,  m => `<span class="tok-num">${m}</span>`);
+    return s;
+  }
+
+  function buildCodeBlock(code, lang) {
+    const id = 'cb-' + Math.random().toString(36).slice(2,8);
+    const hi = highlight(code.trim(), lang);
+    return `<div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">${lang || 'code'}</span>
+        <button class="code-copy-btn" id="${id}" onclick="copyCode(this, ${JSON.stringify(code.trim())})">
+          <i class="fa-solid fa-copy"></i> Copy
+        </button>
+      </div>
+      <pre><code>${hi}</code></pre>
+    </div>`;
+  }
+
+  function copyCode(btn, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+      }, 2000);
+    });
+  }
+
+  // ── MARKDOWN-LITE PARSER ──
+  function parseMarkdown(text) {
+    // Split by code fences
+    const parts = text.split(/(```[\s\S]*?```)/g);
+    return parts.map(part => {
+      const fenceMatch = part.match(/^```(\w*)\n?([\s\S]*?)```$/);
+      if (fenceMatch) {
+        const lang = fenceMatch[1] || 'code';
+        const code = fenceMatch[2];
+        return buildCodeBlock(code, lang);
+      }
+      // inline code
+      let p = part.replace(/`([^`]+)`/g, '<code style="background:rgba(40,98,58,0.2);padding:2px 6px;border-radius:4px;font-family:\'Space Mono\',monospace;font-size:12px">$1</code>');
+      // bold
+      p = p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      // newlines
+      p = p.replace(/\n/g, '<br>');
+      return p;
+    }).join('');
+  }
+
+  // ── APPEND MESSAGE ──
+  function appendMsg(role, text, animate = true) {
+    const wrap = document.getElementById('chat-messages');
+    const div = document.createElement('div');
+    div.className = `msg ${role}`;
+
+    const label = role === 'user'
+      ? '<i class="fa-solid fa-user"></i> You'
+      : '<i class="fa-solid fa-microchip"></i> ZedCore';
+
+    const rawText = text; // plain text for copy
+
+    div.innerHTML = `
+      <div class="msg-label">${label}</div>
+      <div class="msg-bubble">${role === 'bot' ? parseMarkdown(text) : escHtml(text).replace(/\n/g,'<br>')}</div>
+      <div class="msg-actions">
+        <button class="msg-action-btn" onclick="copyMsgText(this, ${JSON.stringify(rawText)})">
+          <i class="fa-regular fa-copy"></i> copy
+        </button>
+      </div>`;
+
+    wrap.appendChild(div);
+    wrap.scrollTop = wrap.scrollHeight;
+    return div;
+  }
+
+  function copyMsgText(btn, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> copied';
+      setTimeout(() => { btn.innerHTML = '<i class="fa-regular fa-copy"></i> copy'; }, 2000);
+    });
+  }
+
+  // ── TYPING INDICATOR ──
+  let typingCounter = 0;
+  function appendTyping() {
+    const id = ++typingCounter;
+    const wrap = document.getElementById('chat-messages');
+    const div = document.createElement('div');
+    div.className = 'msg bot';
+    div.id = `typing-${id}`;
+    div.innerHTML = `
+      <div class="msg-label"><i class="fa-solid fa-microchip"></i> ZedCore</div>
+      <div class="typing-indicator"><span></span><span></span><span></span></div>`;
+    wrap.appendChild(div);
+    wrap.scrollTop = wrap.scrollHeight;
+    return id;
+  }
+
+  function removeTyping(id) {
+    const el = document.getElementById(`typing-${id}`);
+    if (el) el.remove();
+  }
+
+  // ── STREAMING TYPEWRITER ──
+  async function streamText(container, fullText) {
+    const wrap = document.getElementById('chat-messages');
+    // Word-by-word streaming
+    const words = fullText.split(' ');
+    let built = '';
+    for (let i = 0; i < words.length; i++) {
+      built += (i > 0 ? ' ' : '') + words[i];
+      container.innerHTML = parseMarkdown(built + (i < words.length - 1 ? ' ▍' : ''));
+      wrap.scrollTop = wrap.scrollHeight;
+      await new Promise(r => setTimeout(r, 28));
+    }
+    // Final render without cursor
+    container.innerHTML = parseMarkdown(fullText);
+    wrap.scrollTop = wrap.scrollHeight;
+  }
+
+  // ── SEND CHAT ──
+  async function sendChat() {
+    const input = document.getElementById('chat-input');
+    const q = input.value.trim();
+    if (!q) return;
+
+    // Init convo if new
+    if (!currentConvo) {
+      currentConvo = {
+        id: Date.now().toString(),
+        title: q.slice(0, 40),
+        time: timeStr(),
+        messages: []
+      };
+    }
+
+    currentConvo.messages.push({ role: 'user', text: q });
+
+    // Remove welcome
+    const welcome = document.querySelector('.welcome-msg');
+    if (welcome) welcome.remove();
+
+    appendMsg('user', q, false);
+    input.value = '';
+    input.style.height = 'auto';
+
+    const typingId = appendTyping();
+
+    try {
+      const res = await fetch(`/api/proxy?type=chat&q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      const reply = data.reply || data.response || data.message || data.text || JSON.stringify(data);
+
+      removeTyping(typingId);
+
+      // Build bot msg with streaming
+      const wrap = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = 'msg bot';
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble';
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'msg-label';
+      labelDiv.innerHTML = '<i class="fa-solid fa-microchip"></i> ZedCore';
+      const actionsDiv = document.createElement('div');
+      actionsDiv.className = 'msg-actions';
+      div.appendChild(labelDiv);
+      div.appendChild(bubble);
+      div.appendChild(actionsDiv);
+      wrap.appendChild(div);
+
+      await streamText(bubble, reply);
+
+      actionsDiv.innerHTML = `<button class="msg-action-btn" onclick="copyMsgText(this, ${JSON.stringify(reply)})">
+        <i class="fa-regular fa-copy"></i> copy
+      </button>`;
+
+      currentConvo.messages.push({ role: 'bot', text: reply });
+      saveConvo();
+
+    } catch (err) {
+      removeTyping(typingId);
+      appendMsg('bot', 'Connection error. Please try again.', false);
+    }
+  }
+
+  // ── AUTO RESIZE ──
   function autoResize(el) {
     el.style.height = 'auto';
     el.style.height = Math.min(el.scrollHeight, 120) + 'px';
@@ -841,75 +1351,6 @@
       e.preventDefault();
       sendChat();
     }
-  }
-
-  // CHAT
-  let chatHistory = [];
-
-  async function sendChat() {
-    const input = document.getElementById('chat-input');
-    const q = input.value.trim();
-    if (!q) return;
-
-    appendMsg('user', q);
-    input.value = '';
-    input.style.height = 'auto';
-
-    // Remove welcome if present
-    const welcome = document.querySelector('.welcome-msg');
-    if (welcome) welcome.remove();
-
-    const typingId = appendTyping();
-
-    try {
-      const encoded = encodeURIComponent(q);
-      const res = await fetch(`/api/proxy?type=chat&q=${encoded}`);
-      const data = await res.json();
-      const reply = data.reply || data.response || data.message || data.text || JSON.stringify(data);
-      removeTyping(typingId);
-      appendMsg('bot', reply);
-    } catch (err) {
-      removeTyping(typingId);
-      appendMsg('bot', 'Connection error. Please try again.');
-    }
-  }
-
-  function appendMsg(role, text) {
-    const wrap = document.getElementById('chat-messages');
-    const div = document.createElement('div');
-    div.className = `msg ${role}`;
-    const label = role === 'user'
-      ? '<i class="fa-solid fa-user"></i> You'
-      : '<i class="fa-solid fa-robot"></i> ZedCore';
-    div.innerHTML = `
-      <div class="msg-label">${label}</div>
-      <div class="msg-bubble">${text.replace(/\n/g, '<br>')}</div>
-    `;
-    wrap.appendChild(div);
-    wrap.scrollTop = wrap.scrollHeight;
-  }
-
-  let typingCounter = 0;
-  function appendTyping() {
-    const id = ++typingCounter;
-    const wrap = document.getElementById('chat-messages');
-    const div = document.createElement('div');
-    div.className = 'msg bot';
-    div.id = `typing-${id}`;
-    div.innerHTML = `
-      <div class="msg-label"><i class="fa-solid fa-robot"></i> ZedCore</div>
-      <div class="typing-indicator">
-        <span></span><span></span><span></span>
-      </div>
-    `;
-    wrap.appendChild(div);
-    wrap.scrollTop = wrap.scrollHeight;
-    return id;
-  }
-
-  function removeTyping(id) {
-    const el = document.getElementById(`typing-${id}`);
-    if (el) el.remove();
   }
 
   // IMAGE GEN
@@ -994,4 +1435,4 @@
   }
 </script>
 </body>
-</html>
+  </html>
