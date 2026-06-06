@@ -923,28 +923,19 @@
 
     loading.classList.add('show');
     result.classList.remove('show');
+    output.src = '';
 
-    try {
-      const url = `/api/proxy?type=dalle&q=${encodeURIComponent(prompt)}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      const imgUrl = data.imageUrl || data.image || data.url || data.result;
-
-      if (!imgUrl) throw new Error('No image URL');
-
-      output.src = imgUrl;
-      output.onload = () => {
-        loading.classList.remove('show');
-        result.classList.add('show');
-      };
-      output.onerror = () => {
-        loading.classList.remove('show');
-        showToast('Image load failed');
-      };
-    } catch (err) {
+    output.onload = () => {
+      loading.classList.remove('show');
+      result.classList.add('show');
+    };
+    output.onerror = () => {
       loading.classList.remove('show');
       showToast('Generation failed');
-    }
+    };
+
+    // Proxy streams image bytes directly — just set src
+    output.src = `/api/proxy?type=dalle&q=${encodeURIComponent(prompt)}&t=${Date.now()}`;
   }
 
   // NSFW
@@ -965,28 +956,19 @@
 
     loading.classList.add('show');
     result.classList.remove('show');
+    output.src = '';
 
-    try {
-      const url = `/api/proxy?type=nsfw_${selectedNsfw}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      const imgUrl = data.imageUrl || data.url || data.image || data.link || data.result;
-
-      if (!imgUrl) throw new Error('No image');
-
-      output.src = imgUrl;
-      output.onload = () => {
-        loading.classList.remove('show');
-        result.classList.add('show');
-      };
-      output.onerror = () => {
-        loading.classList.remove('show');
-        showToast('Image load failed');
-      };
-    } catch (err) {
+    output.onload = () => {
+      loading.classList.remove('show');
+      result.classList.add('show');
+    };
+    output.onerror = () => {
       loading.classList.remove('show');
       showToast('Generation failed');
-    }
+    };
+
+    // Proxy streams image bytes directly — just set src
+    output.src = `/api/proxy?type=nsfw_${selectedNsfw}&t=${Date.now()}`;
   }
 
   function downloadImg() {
@@ -1012,4 +994,4 @@
   }
 </script>
 </body>
-  </html>
+</html>
