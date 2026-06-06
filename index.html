@@ -1160,10 +1160,11 @@
   function buildCodeBlock(code, lang) {
     const id = 'cb-' + Math.random().toString(36).slice(2,8);
     const hi = highlight(code.trim(), lang);
+    const safeCode = btoa(unescape(encodeURIComponent(code.trim())));
     return `<div class="code-block">
       <div class="code-header">
         <span class="code-lang">${lang || 'code'}</span>
-        <button class="code-copy-btn" id="${id}" onclick="copyCode(this, ${JSON.stringify(code.trim())})">
+        <button class="code-copy-btn" id="${id}" data-code="${safeCode}" onclick="copyCode(this)">
           <i class="fa-solid fa-copy"></i> Copy
         </button>
       </div>
@@ -1171,7 +1172,8 @@
     </div>`;
   }
 
-  function copyCode(btn, text) {
+  function copyCode(btn) {
+    const text = decodeURIComponent(escape(atob(btn.dataset.code)));
     navigator.clipboard.writeText(text).then(() => {
       btn.classList.add('copied');
       btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
@@ -1213,13 +1215,12 @@
       ? '<i class="fa-solid fa-user"></i> You'
       : '<i class="fa-solid fa-microchip"></i> ZedCore';
 
-    const rawText = text; // plain text for copy
-
+    const safeText = btoa(unescape(encodeURIComponent(rawText)));
     div.innerHTML = `
       <div class="msg-label">${label}</div>
       <div class="msg-bubble">${role === 'bot' ? parseMarkdown(text) : escHtml(text).replace(/\n/g,'<br>')}</div>
       <div class="msg-actions">
-        <button class="msg-action-btn" onclick="copyMsgText(this, ${JSON.stringify(rawText)})">
+        <button class="msg-action-btn" data-text="${safeText}" onclick="copyMsgText(this)">
           <i class="fa-regular fa-copy"></i> copy
         </button>
       </div>`;
@@ -1229,7 +1230,8 @@
     return div;
   }
 
-  function copyMsgText(btn, text) {
+  function copyMsgText(btn) {
+    const text = decodeURIComponent(escape(atob(btn.dataset.text)));
     navigator.clipboard.writeText(text).then(() => {
       btn.innerHTML = '<i class="fa-solid fa-check"></i> copied';
       setTimeout(() => { btn.innerHTML = '<i class="fa-regular fa-copy"></i> copy'; }, 2000);
@@ -1327,7 +1329,7 @@
 
       await streamText(bubble, reply);
 
-      actionsDiv.innerHTML = `<button class="msg-action-btn" onclick="copyMsgText(this, ${JSON.stringify(reply)})">
+      actionsDiv.innerHTML = `<button class="msg-action-btn" data-text="${btoa(unescape(encodeURIComponent(reply)))}" onclick="copyMsgText(this)">
         <i class="fa-regular fa-copy"></i> copy
       </button>`;
 
@@ -1435,4 +1437,4 @@
   }
 </script>
 </body>
-  </html>
+        </html>
